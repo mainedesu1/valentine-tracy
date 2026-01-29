@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will you be my Valentine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&family=Italiana&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --pink-light: #FFE5F1;
+            --pink-medium: #FFB7D5;
+            --pink-deep: #FF69B4;
+            --purple-light: #E6D5FF;
+            --purple-medium: #C4A8FF;
+            --purple-deep: #9D6FFF;
+            --cream: #FFF8F3;
+            --gold: #FFD700;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, var(--pink-light) 0%, var(--purple-light) 100%);
+            color: #4A4A4A;
+            overflow-x: hidden;
+        }
+
+        /* Floating hearts animation */
+        .hearts-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            animation: float 15s infinite ease-in-out;
+            opacity: 0.3;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-family: 'Italiana', serif;
+            font-size: clamp(3rem, 8vw, 7rem);
+            color: var(--purple-deep);
+            margin-bottom: 1rem;
+            animation: fadeInDown 1.5s ease-out;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            color: var(--pink-deep);
+            font-style: italic;
+            animation: fadeInUp 1.5s ease-out 0.5s backwards;
+            margin-bottom: 2rem;
+        }
+
+        .hero .vietnamese {
+            font-size: clamp(1.2rem, 2.5vw, 2rem);
+            color: var(--purple-medium);
+            animation: fadeIn 2s ease-out 1s backwards;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Page Navigation System */
+        .page-section {
+            display: none;
+            min-height: 100vh;
+            animation: fadeInPage 0.8s ease-out;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeInPage {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .navigation-buttons {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            box-shadow: 0 10px 40px rgba(157, 111, 255, 0.4);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--pink-deep), var(--purple-deep));
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(157, 111, 255, 0.3);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.5);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .page-indicator {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem 1.5rem;
+            border-radius: 30px;
+            box-shadow: 0 5px 20px rgba(157, 111, 255, 0.3);
+            z-index: 1000;
+            font-family: 'Playfair Display', serif;
+            color: var(--purple-deep);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Love Letter Section */
+        .love-letter {
+            position: relative;
+            max-width: 900px;
+            margin: 4rem auto;
+            padding: 4rem 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(157, 111, 255, 0.3);
+            z-index: 2;
+            backdrop-filter: blur(10px);
+            border: 3px solid var(--purple-light);
+        }
+
+        .love-letter h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--purple-deep);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .love-letter p {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            line-height: 2;
+            color: #555;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .signature {
+            text-align: right;
+            font-family: 'Italiana', serif;
+            font-size: 1.8rem;
+            color: var(--pink-deep);
+            margin-top: 2rem;
+        }
+
+        /* Photo Gallery */
+        .gallery {
+            position: relative;
+            max-width: 1400px;
+            margin: 6rem auto;
+            padding: 4rem 2rem;
+            z-index: 2;
+        }
+
+        .gallery h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--purple-deep);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        /* Polaroid Card Grid */
+        .photo-carousel {
+            position: relative;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.5rem;
+            perspective: 1000px;
+        }
+
+        .card-container {
+            position: relative;
+            width: 100%;
+            padding-top: 125%; /* 4:5 aspect ratio for polaroid */
+            cursor: pointer;
+        }
+
+        .card-flipper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .card-container.flipped .card-flipper {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Card Back (Heart Design) */
+        .card-back {
+            background: linear-gradient(135deg, var(--pink-medium), var(--purple-medium));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid white;
+        }
+
+        .card-back::before {
+            content: "♡";
+            font-size: 5rem;
+            color: white;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        /* Hide card back when flipped */
+        .card-container.flipped .card-back {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Card Front (Polaroid Style) */
+        .card-front {
+            background: white;
+            padding: 0.8rem;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .polaroid-image {
+            width: 100%;
+            height: 75%;
+            object-fit: cover;
+            background: #f0f0f0;
+            border: 2px solid #e0e0e0;
+        }
+
+        .polaroid-caption {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            text-align: center;
+        }
+
+        .polaroid-caption p {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.9rem;
+            color: var(--purple-deep);
+            line-height: 1.3;
+            margin: 0;
+        }
+
+        /* Hover effect for unflipped cards */
+        .card-container:not(.flipped):hover .card-flipper {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(157, 111, 255, 0.4);
+        }
+
+        /* Button to flip all cards */
+        .flip-controls {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .flip-btn {
+            padding: 1rem 2rem;
+            margin: 0 0.5rem;
+            background: linear-gradient(135deg, var(--pink-deep), var(--purple-deep));
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(157, 111, 255, 0.4);
+        }
+
+        .flip-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.5);
+        }
+
+        .carousel-controls {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .carousel-btn {
+            padding: 1rem 2rem;
+            margin: 0 1rem;
+            background: linear-gradient(135deg, var(--pink-deep), var(--purple-deep));
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(157, 111, 255, 0.4);
+        }
+
+        .carousel-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.5);
+        }
+
+        /* Memories Timeline */
+        .memories {
+            position: relative;
+            max-width: 1000px;
+            margin: 6rem auto;
+            padding: 4rem 2rem;
+            z-index: 2;
+        }
+
+        .memories h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--purple-deep);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .memory-item {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 20px;
+            border-left: 5px solid var(--pink-deep);
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .memory-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.3);
+        }
+
+        .memory-item p {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .memory-item::before {
+            content: "💕";
+            font-size: 2rem;
+            margin-right: 1rem;
+        }
+
+        /* Music Section */
+        .music-section {
+            position: relative;
+            max-width: 900px;
+            margin: 6rem auto;
+            padding: 4rem 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(157, 111, 255, 0.3);
+            z-index: 2;
+            text-align: center;
+        }
+
+        .music-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--purple-deep);
+            margin-bottom: 2rem;
+        }
+
+        .spotify-embed {
+            margin: 2rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        /* Movie Quotes Section */
+        .quotes {
+            position: relative;
+            max-width: 1000px;
+            margin: 6rem auto;
+            padding: 4rem 2rem;
+            z-index: 2;
+        }
+
+        .quotes h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--purple-deep);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .quote-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(230, 213, 255, 0.95));
+            padding: 3rem;
+            margin: 2rem 0;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(157, 111, 255, 0.3);
+            border: 2px solid var(--purple-light);
+            position: relative;
+        }
+
+        .quote-card::before {
+            content: """;
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 8rem;
+            color: var(--pink-medium);
+            opacity: 0.3;
+            font-family: Georgia, serif;
+        }
+
+        .quote-text {
+            font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+            font-style: italic;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quote-source {
+            text-align: right;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: var(--purple-deep);
+            font-weight: 600;
+        }
+
+        /* Mystery Gifts Section */
+        .mystery-gifts {
+            position: relative;
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 4rem 2rem;
+            z-index: 2;
+        }
+
+        .mystery-gifts h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--purple-deep);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .mystery-subtitle {
+            text-align: center;
+            font-size: clamp(1.2rem, 2vw, 1.6rem);
+            color: var(--pink-deep);
+            margin-bottom: 3rem;
+            font-style: italic;
+        }
+
+        .gifts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .gift-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem;
+            border-radius: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 10px 30px rgba(157, 111, 255, 0.3);
+            border: 3px solid var(--purple-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gift-box:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(255, 105, 180, 0.5);
+            border-color: var(--pink-deep);
+        }
+
+        .gift-box.selected {
+            background: linear-gradient(135deg, var(--pink-light), var(--purple-light));
+            border-color: var(--purple-deep);
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px rgba(157, 111, 255, 0.6);
+        }
+
+        .gift-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            display: block;
+            animation: float-gift 3s ease-in-out infinite;
+        }
+
+        @keyframes float-gift {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .gift-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--purple-deep);
+            margin-bottom: 1rem;
+        }
+
+        .gift-box p {
+            font-size: 1.2rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .lucky-section {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 3rem;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 105, 180, 0.2));
+            border-radius: 30px;
+            border: 3px dashed var(--gold);
+        }
+
+        .lucky-button {
+            padding: 2rem 4rem;
+            background: linear-gradient(135deg, var(--gold), #FFA500);
+            color: #FF69B4;
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .lucky-button:hover {
+            transform: scale(1.1) rotate(-2deg);
+            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.6);
+        }
+
+        .reveal-container {
+            margin-top: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease-out;
+        }
+
+        .reveal-container.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gift-reveal {
+            background: white;
+            padding: 3rem;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(157, 111, 255, 0.4);
+            border: 3px solid var(--purple-deep);
+        }
+
+        .gift-reveal h3 {
+            font-family: 'Italiana', serif;
+            font-size: 3rem;
+            color: var(--purple-deep);
+            margin-bottom: 1rem;
+        }
+
+        .big-emoji {
+            font-size: 6rem;
+            margin: 1rem 0;
+        }
+
+        /* Interactive Button */
+        .interactive-section {
+            position: relative;
+            max-width: 800px;
+            margin: 6rem auto;
+            padding: 4rem 2rem;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .love-button {
+            padding: 2rem 4rem;
+            background: linear-gradient(135deg, var(--pink-deep), var(--purple-deep));
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 15px 40px rgba(157, 111, 255, 0.4);
+        }
+
+        .love-button:hover {
+            transform: scale(1.1) rotate(2deg);
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.6);
+        }
+
+        .message-reveal {
+            margin-top: 2rem;
+            font-size: 2rem;
+            color: var(--purple-deep);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease-out;
+        }
+
+        .message-reveal.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Valentine Question */
+        .valentine-question {
+            text-align: center;
+        }
+
+        .valentine-question h2 {
+            font-family: 'Italiana', serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            color: var(--purple-deep);
+            margin-bottom: 3rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .valentine-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .valentine-btn {
+            padding: 2rem 4rem;
+            background: linear-gradient(135deg, var(--pink-deep), var(--pink-light));
+            color: #6a5acd;
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.4);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .valentine-btn:hover {
+            transform: scale(1.15) rotate(-3deg);
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.6);
+        }
+
+        /* Final Page Navigation */
+        .final-nav-menu {
+            display: none;
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(157, 111, 255, 0.3);
+        }
+
+        .final-nav-menu.show {
+            display: block;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .final-nav-menu h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--purple-deep);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .nav-menu-btn {
+            padding: 1.5rem 1rem;
+            background: linear-gradient(135deg, var(--pink-light), var(--purple-light));
+            color: var(--purple-deep);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            border: 2px solid var(--purple-light);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .nav-menu-btn:hover {
+            background: linear-gradient(135deg, var(--pink-deep), var(--purple-deep));
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(157, 111, 255, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.8));
+            z-index: 2;
+        }
+
+        footer p {
+            font-size: 1.5rem;
+            color: var(--purple-deep);
+            font-family: 'Italiana', serif;
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--pink-deep);
+            top: -10px;
+            opacity: 0;
+            animation: confetti-fall 3s ease-out forwards;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(100vh) rotate(720deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navigation-buttons {
+                padding: 0.8rem 1rem;
+                gap: 0.5rem;
+            }
+            
+            .nav-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+            
+            .gifts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .card-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            /* Taller polaroid cards on mobile */
+            .card-container {
+                padding-top: 150%;
+            }
+            
+            /* Adjust image/caption ratio */
+            .polaroid-image {
+                height: 68%;
+            }
+            
+            .polaroid-caption {
+                flex: 1;
+                min-height: 60px;
+                padding: 0.8rem 0.5rem;
+            }
+            
+            .polaroid-caption p {
+                font-size: 0.7rem;
+                line-height: 1.3;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
+            
+            /* Fix gift boxes on mobile */
+            .gift-box {
+                padding: 1.5rem 1rem;
+            }
+            
+            .gift-box h3 {
+                font-size: 1.3rem;
+                line-height: 1.3;
+            }
+            
+            .gift-box p {
+                font-size: 0.85rem;
+                line-height: 1.3;
+            }
+            
+            .gift-icon {
+                font-size: 3rem;
+            }
+            
+            /* Fix lucky section */
+            .lucky-section {
+                padding: 2rem 1rem;
+            }
+            
+            .lucky-section h3 {
+                font-size: 1.8rem !important;
+                line-height: 1.3;
+            }
+            
+            .lucky-section p {
+                font-size: 1rem !important;
+            }
+            
+            .lucky-button {
+                padding: 1.5rem 2.5rem;
+                font-size: 1.3rem;
+            }
+            
+            /* Fix revealed gifts */
+            .gift-reveal {
+                padding: 2rem 1rem;
+            }
+            
+            .gift-reveal h3 {
+                font-size: 1.5rem !important;
+                line-height: 1.3;
+            }
+            
+            .gift-reveal .big-emoji {
+                font-size: 3.5rem;
+            }
+            
+            .gift-reveal h3[style*="font-size: 2.5rem"] {
+                font-size: 1.4rem !important;
+            }
+            
+            .gift-reveal p[style*="font-size: 1.3rem"],
+            .gift-reveal p[style*="font-size: 1.8rem"] {
+                font-size: 1rem !important;
+                line-height: 1.4 !important;
+            }
+            
+            .valentine-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating hearts background -->
+    <div class="hearts-background" id="hearts-bg"></div>
+
+    <!-- Page Indicator -->
+    <div class="page-indicator" id="page-indicator">Page 1 of 9</div>
+
+    <!-- Navigation Buttons -->
+    <div class="navigation-buttons" id="nav-buttons">
+        <button class="nav-btn" id="prev-btn" onclick="previousPage()" disabled>← Previous</button>
+        <button class="nav-btn" id="next-btn" onclick="nextPage()">Next →</button>
+    </div>
+
+    <!-- Valentine Question -->
+    <section class="page-section active" data-page="0">
+        <div class="hero valentine-question">
+            <h2>Will You Be My Valentine?</h2>
+            <div class="valentine-buttons">
+                <button class="valentine-btn" onclick="answerValentine('yes1')">Yes!</button>
+                <button class="valentine-btn" style="color: #FF69B4" onclick="answerValentine('yes2')">Yes!!(But in pink)</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- intro/hero -->
+    <section class="page-section" data-page="1">
+        <div class="hero">
+            <h1>My dearest Tracy</h1>
+            <p class="subtitle">Em yêu ơi</p>
+            <p class="vietnamese">Anh yêu em nhiều lắm</p>
+        </div>
+    </section>
+
+    <!-- Page 2: Love Letter -->
+    <section class="page-section" data-page="2">
+        <div class="love-letter" style="margin-top: 8rem;">
+            <h2>My dearest Tracy</h2>
+            
+	    <p> Bello em,
+	    </p>
+	    <p>
+                Troi oi, Where do I start. Thank you so much for every moment and memory we have made together. 
+                I thank God daily for our sacred love. There is not a moment in my day where I do not think about us.
+            </p>
+            <p>
+                You are hard working, proactive, prudent, thoughtful, kind and compassionate. Your smile lights up every room 
+                you enter, that's why I always remind you to smile. Thank you for always putting your family first, may God 
+                grant you a long, healthy and fulfilling life, I have faith in him that he will grant that to you em.
+            </p>
+            <p class="signature">I love you so much!💖</p>
+        </div>
+    </section>
+
+    <!-- pickacard -->
+    <section class="page-section" data-page="3">
+        <div class="gallery">
+            <h2>Pick a card, any card!</h2>
+            <p style="text-align: center; font-size: 1.3rem; color: #666; margin-bottom: 2rem;">
+                Pls click to see our moments together em 💕
+            <div class="flip-controls">
+                <button class="flip-btn" onclick="flipAllCards()">✨ Flip All Cards ✨</button>
+                <button class="flip-btn" onclick="resetAllCards()">🔄 Reset All Cards 🔄</button>
+            </div>
+            <div class="photo-carousel">
+                <div class="card-grid" id="card-grid"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Memories -->
+    <section class="page-section" data-page="4">
+        <div class="memories">
+            <h2>Memories I Cherish Forever</h2>
+            
+            <div class="memory-item">
+                <p>Our first day together in Vietnam, where we went into Parc Mall and ate at the restaurant with your parents</p>
+            </div>
+            
+            <div class="memory-item">
+                <p>Our day trip to Vung Tau - visiting the beach, playing soccer, building our feeble sandcastle, picking up sea shells, and visiting the mall to eat</p>
+            </div>
+            
+            <div class="memory-item">
+                <p>On the way back from Vung Tau when we asked the driver if we could do karaoke</p>
+            </div>
+            
+            <div class="memory-item">
+                <p>When we visited the statue and the church together</p>
+            </div>
+            
+            <div class="memory-item">
+                <p>When we matched t-shirts and looked so cute together</p>
+            </div>
+            
+            <div class="memory-item">
+                <p>Visiting cafes together, our cozy coffee dates</p>
+            </div>
+            
+            <div class="memory-item">
+                <p>Eating at home and watching movies together, our perfect quiet moments</p>
+            </div>
+            
+            <div class="memory-item">
+                <p>Going shopping and eating out, exploring the city together</p>
+            </div>
+            
+            <div class="memory-item">
+                <p>Walking around Q1 and accidentally visiting a concert at the Zalo New Year festival</p>
+            </div>
+            
+            <div class="memory-item">
+                <p>Visiting the pink church after going to Di Mai's house</p>
+            </div>
+            
+            <div class="memory-item">
+                <p>Comforting each other at the airport and when we are sad, wiping away each other's tears</p>
+            </div>
+            
+            <div class="memory-item">
+                <p>Every moment we had I can never forget. There are many more memories I cherish, and many more memories we will make em. ♡	</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page 5: Music Section with Spotify Embed -->
+    <section class="page-section" data-page="5">
+        <div class="music-section" style="margin-top: 6rem;">
+            <h2>Songs That Remind Me of Us</h2>
+            <p style="font-size: 1.3rem; color: #666; margin-bottom: 2rem;">
+                I have soo many songs that remind of us, but here the ones that remind me of you the most! (I'm sorry i didn't know how to integrate a playlist directly from soundcloud...)
+            </p>
+            
+            <p>(p.s, you can click onto next page and the music will still play!!!)</p>
+
+            <div class="spotify-embed">
+                
+		<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A575629086&color=%23ff69b4&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/crisaunt" title="crisaunt" target="_blank" style="color: #cccccc; text-decoration: none;">crisaunt</a> · <a href="https://soundcloud.com/crisaunt/dreamgirl" title="❀ dream girl ❀" target="_blank" style="color: #cccccc; text-decoration: none;">❀ dream girl ❀</a></div>
+
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A84657619&color=%23ff69b4&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/anychanh" title="anychanh" target="_blank" style="color: #cccccc; text-decoration: none;">anychanh</a> · <a href="https://soundcloud.com/anychanh/nhu-quynh-vung-la-me-bay" title="Như Quỳnh - Vùng Lá Me Bay" target="_blank" style="color: #cccccc; text-decoration: none;">Như Quỳnh - Vùng Lá Me Bay</a></div>
+
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A292549863&color=%23ff69b4&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/lyfsuxx" title="girl in red" target="_blank" style="color: #cccccc; text-decoration: none;">girl in red</a> · <a href="https://soundcloud.com/lyfsuxx/we-fell-in-love-in-buddyville" title="we fell in love in october" target="_blank" style="color: #cccccc; text-decoration: none;">we fell in love in october</a></div>
+
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A228085949&color=%23ff69b4&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/mazzystarofficial" title="Mazzy Star (Official)" target="_blank" style="color: #cccccc; text-decoration: none;">Mazzy Star (Official)</a> · <a href="https://soundcloud.com/mazzystarofficial/01-fade-into-you" title="Fade Into You" target="_blank" style="color: #cccccc; text-decoration: none;">Fade Into You</a></div>
+
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1112214940&color=%23ff69b4&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/stephensanchezofficial" title="Stephen Sanchez" target="_blank" style="color: #cccccc; text-decoration: none;">Stephen Sanchez</a> · <a href="https://soundcloud.com/stephensanchezofficial/until-i-found-you" title="Until I Found You" target="_blank" style="color: #cccccc; text-decoration: none;">Until I Found You</a></div>
+
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A32533935&color=%23ff69b4&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/jasonmraz" title="Jason Mraz" target="_blank" style="color: #cccccc; text-decoration: none;">Jason Mraz</a> · <a href="https://soundcloud.com/jasonmraz/i-wont-give-up" title="I Won&#x27;t Give Up" target="_blank" style="color: #cccccc; text-decoration: none;">I Won&#x27;t Give Up</a></div>
+
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A449716776&color=%23ff69b4&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/pauli-niemi" title="slipfunc" target="_blank" style="color: #cccccc; text-decoration: none;">slipfunc</a> · <a href="https://soundcloud.com/pauli-niemi/summer-luv" title="summer luv" target="_blank" style="color: #cccccc; text-decoration: none;">summer luv</a></div>
+
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1563214087&color=%23ff69b4&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/mitskiofficial" title="Mitski" target="_blank" style="color: #cccccc; text-decoration: none;">Mitski</a> · <a href="https://soundcloud.com/mitskiofficial/my-love-mine-all-mine" title="My Love Mine All Mine" target="_blank" style="color: #cccccc; text-decoration: none;">My Love Mine All Mine</a></div>
+
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1112365450&color=%23ff69b4&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/user-886812089" title="Hoàng Sài Gòn" target="_blank" style="color: #cccccc; text-decoration: none;">Hoàng Sài Gòn</a> · <a href="https://soundcloud.com/user-886812089/mua-thu-cho-em" title="Mua Thu Cho Em" target="_blank" style="color: #cccccc; text-decoration: none;">Mua Thu Cho Em</a></div>
+
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A662505221&color=%23ff69b4&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/mrbrunomajor" title="Bruno Major" target="_blank" style="color: #cccccc; text-decoration: none;">Bruno Major</a> · <a href="https://soundcloud.com/mrbrunomajor/nothing" title="Nothing" target="_blank" style="color: #cccccc; text-decoration: none;">Nothing</a></div>
+
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A256005065&color=%23ff69b4&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/chris_brown" title="Chris_Brown" target="_blank" style="color: #cccccc; text-decoration: none;">Chris_Brown</a> · <a href="https://soundcloud.com/chris_brown/yo-excuse-me-miss-main" title="Yo (Excuse Me Miss)" target="_blank" style="color: #cccccc; text-decoration: none;">Yo (Excuse Me Miss)</a></div>
+
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A711577438&color=%23ff69b4&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/santo-johnny" title="Santo &amp; Johnny" target="_blank" style="color: #cccccc; text-decoration: none;">Santo &amp; Johnny</a> · <a href="https://soundcloud.com/santo-johnny/and-i-love-her" title="And I Love Her" target="_blank" style="color: #cccccc; text-decoration: none;">And I Love Her</a></div>
+
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A243032027&color=%23ff69b4&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/oniojoy" title="Onio Joy" target="_blank" style="color: #cccccc; text-decoration: none;">Onio Joy</a> · <a href="https://soundcloud.com/oniojoy/cant-help-falling-in-love-with-you-elvis-presley-lyrics" title="Can&#x27;t Help Falling In Love With You - Elvis Presley - Lyrics" target="_blank" style="color: #cccccc; text-decoration: none;">Can&#x27;t Help Falling In Love With You - Elvis Presley - Lyrics</a></div>
+
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A336741764&color=%23ff69b4&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/hazy-nights" title="hazy nights" target="_blank" style="color: #cccccc; text-decoration: none;">hazy nights</a> · <a href="https://soundcloud.com/hazy-nights/dontgo" title="because" target="_blank" style="color: #cccccc; text-decoration: none;">because</a></div>
+
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A259001650&color=%23ff69b4&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/stevie-wonder-official" title="STEVIE WONDER" target="_blank" style="color: #cccccc; text-decoration: none;">STEVIE WONDER</a> · <a href="https://soundcloud.com/stevie-wonder-official/i-just-called-to-say-i-love" title="I Just Called To Say I Love You (Single Version)" target="_blank" style="color: #cccccc; text-decoration: none;">I Just Called To Say I Love You</a></div>
+
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A327385700&color=%23ff69b4&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/kaymhmd8" title="kaIIie" target="_blank" style="color: #cccccc; text-decoration: none;">kaIIie</a> · <a href="https://soundcloud.com/kaymhmd8/frank-sinatra-and-nancy-sinatra-something-stupid" title="Frank Sinatra and Nancy Sinatra -  Something Stupid" target="_blank" style="color: #cccccc; text-decoration: none;">Frank Sinatra and Nancy Sinatra -  Something Stupid</a></div>
+
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2209815653&color=%23ff69b4&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/bill-cleveland-760645002" title="B Cleveland" target="_blank" style="color: #cccccc; text-decoration: none;">B Cleveland</a> · <a href="https://soundcloud.com/bill-cleveland-760645002/ill-be-waiting" title="I&#x27;ll be waiting" target="_blank" style="color: #cccccc; text-decoration: none;">I&#x27;ll be waiting</a></div>
+
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A194309990&color=%23ff69b4&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/khanhnguyencanad" title="Khanh Nguyen" target="_blank" style="color: #cccccc; text-decoration: none;">Khanh Nguyen</a> · <a href="https://soundcloud.com/khanhnguyencanad/bien-man-nhat-truong" title="Biển mặn- Nhật Trường" target="_blank" style="color: #cccccc; text-decoration: none;">Biển mặn- Nhật Trường</a></div>
+
+
+
+
+            
+            <p style="font-size: 1.1rem; color: #888; margin-top: 2rem;">
+                I love you em!
+            </p>
+        </div>
+    </section>
+
+    <!-- Page 6: Movie Quotes -->
+    <section class="page-section" data-page="6">
+        <div class="quotes">
+            <h2>Quotes about us:))</h2>
+
+            <div class="quote-card">
+                <p class="quote-text">
+                    "Sorry, I have to go see about a girl"
+                </p>
+                <p class="quote-source">Will — Good Will Hunting</p>
+            </div>
+
+            <div class="quote-card">
+                <p class="quote-text">
+                    "You don't know about real loss, because it only occurs when you've loved something more than you love yourself. 
+                    And I doubt you've ever dared to love anybody that much.""
+                </p>
+                <p class="quote-source">Sean — Good Will Hunting</p>
+            </div>
+
+             <div class="quote-card">
+                <p class="quote-text">
+                    "Then, I'll never ever leave. I'll always be with you." 
+                </p>
+                <p class="quote-source">Seita — Grave of the Fireflies</p>
+            </div>
+
+            <div class="quote-card">
+                <p class="quote-text">
+               “You cannot alter your fate. However, you can rise to meet it.”
+                </p>
+                <p class="quote-source"> — Princess Mononoke</p>
+            </div>
+
+            <div class="quote-card">
+                <p class="quote-text">
+                    “I think we dream so we don’t have to be apart for so long. If we’re in each other’s dreams, we can be together all the time.”
+                </p>
+                <p class="quote-source">― A.A. Milne, Winnie-the-Pooh</p>
+            </div>
+
+            <div class="quote-card">
+                <p class="quote-text">
+                    "You are altogether beautiful, my love;
+                    there is no flaw in you. You have captivated my heart, my sister, my bride; you have captivated my heart with one glance of your eyes, with one jewel of your necklace"
+                </p>
+                <p class="quote-source">― Song of Solomon 4:7,9 ESV</p>
+            </div>
+
+            <div class="quote-card">
+                <p class="quote-text">
+                    "And now do not be afraid, my daughter. I will do for you whatever you request, since all my fellow townspeople know that you are a woman of noble character"
+                </p>
+                <p class="quote-source">― Ruth 3:11 ESV</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Page 7: Mystery Gifts -->
+    <section class="page-section" data-page="7">
+        <div class="mystery-gifts">
+            <h2>🩷Pls choose your mystery gift!🩷</h2>
+            <p class="mystery-subtitle">Pls click a mystery gift and scroll down to claim, or click "Feeling Lucky" if you are feeling lucky!</p>
+            
+            <div class="gifts-grid">
+                <div class="gift-box" onclick="selectGift(1, this)">
+                    <span class="gift-icon">🎁</span>
+                    <h3>Mystery Gift 1</h3>
+                    <p>A surprise that will allow you to work harder than minions...</p>
+                </div>
+                
+                <div class="gift-box" onclick="selectGift(2, this)">
+                    <span class="gift-icon">🎁</span>
+                    <h3>Mystery Gift 2</h3>
+                    <p>For taking as many pictures as you want...</p>
+                </div>
+                
+                <div class="gift-box" onclick="selectGift(3, this)">
+                    <span class="gift-icon">🎁</span>
+                    <h3>Mystery Gift 3</h3>
+                    <p>A big protective companion for my công chúa...</p>
+                </div>
+            </div>
+
+            <div class="lucky-section">
+                <h3 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--purple-deep); margin-bottom: 1rem;">
+                    Feeling Lucky?
+                </h3>
+                <p style="font-size: 1.3rem; color: #666; margin-bottom: 2rem;">
+                    Click below to reveal ALL the mystery gifts at once!
+                </p>
+                <button class="lucky-button" onclick="revealAllGifts()">
+                    ✨ I'm Feeling Lucky! ✨
+                </button>
+            </div>
+
+            <div class="reveal-container" id="gift-reveal">
+                <div class="gift-reveal">
+                    <h3>OI TROI OI !!</h3>
+                    <div id="revealed-gifts"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page 8: Interactive Section & Footer -->
+    <section class="page-section" data-page="8">
+        <div class="interactive-section" style="margin-top: 10rem;">
+            <button class="love-button" onclick="revealMessage()">
+                Thank you so much for everything em!
+            </button>
+            <div class="message-reveal" id="secret-message">
+                Em yêu, you are my greatest blessing! 
+                <br>Anh yêu em nhiều lắm! 💕
+            </div>
+        </div>
+
+        <!-- Final Navigation Menu -->
+        <div class="final-nav-menu" id="final-nav-menu">
+            <h3>Go Back to Any Page:)</h3>
+            <div class="nav-grid">
+                <button class="nav-menu-btn" onclick="goToPage(1)">💝 Welcome</button>
+                <button class="nav-menu-btn" onclick="goToPage(2)">💌 Love Letter</button>
+                <button class="nav-menu-btn" onclick="goToPage(3)">📸 Photos</button>
+                <button class="nav-menu-btn" onclick="goToPage(4)">💭 Memories</button>
+                <button class="nav-menu-btn" onclick="goToPage(5)">🎵 Music</button>
+                <button class="nav-menu-btn" onclick="goToPage(6)">🎬 Quotes</button>
+                <button class="nav-menu-btn" onclick="goToPage(7)">🎁 Gifts</button>
+            </div>
+        </div>
+
+        <footer style="margin-top: 4rem;">
+            <p>Forever Yours, Always and Forever</p>
+            <p style="font-size: 1.2rem; margin-top: 1rem; color: var(--pink-deep);">
+                Happy Valentine's Day em iuuu
+            </p>
+        </footer>
+    </section>
+
+    <div class="confetti" id="confetti"></div>
+
+    <script>
+        let currentPage = 0;
+        const totalPages = 9;
+        let selectedGifts = new Set();
+        
+        const photos = [
+            { file: 'photos/IMG_9218.jpg', caption: 'Trying on áo dài together' },
+            { file: 'photos/IMG_9196.jpg', caption: 'Ngon Dinner with me va ba' },
+            { file: 'photos/IMG_9285.jpg', caption: 'Tracy 22 birthday' },
+            { file: 'photos/IMG_9330.jpg', caption: 'Airport handholding depression:(' },
+            { file: 'photos/IMG_1515.jpg', caption: '25th birthday quaooooo' },
+            { file: 'photos/IMG_1510.jpg', caption: 'One of my favourite pictures of us infront of the mall' },
+            { file: 'photos/IMG_1408.jpg', caption: 'Jan 12 Vung tau on the bike' },
+            { file: 'photos/IMG_1401.jpg', caption: 'Beach matching tshirt:)' },
+            { file: 'photos/IMG_1395.jpg', caption: 'Our hearts in the sand' },
+            { file: 'photos/IMG_1387.jpg', caption: 'Our feet and the sea shells' },
+            { file: 'photos/IMG_1335.jpg', caption: 'Zalo fest in Q1' },
+            { file: 'photos/IMG_1331.jpg', caption: 'Homemade dinner and movie' },
+            { file: 'photos/IMG_1246.jpg', caption: 'Q7 Outside the mall' },
+            { file: 'photos/IMG_1213.jpg', caption: 'Us Infront of Thích Quảng Đức' },
+            { file: 'photos/IMG_1193.jpg', caption: 'Matching Tshirts:))' },
+            { file: 'photos/IMG_1173.jpg', caption: 'At the book cafe' },
+            { file: 'photos/IMG_1111.jpg', caption: 'Yummy tummy dinner tracy made' },
+            { file: 'photos/IMG_1093.jpg', caption: 'Day 2 after buying the rings:)' },
+            { file: 'photos/IMG_1079.jpg', caption: 'Best new years ever' },
+            { file: 'photos/IMG_1129.jpg', caption: 'At the pretty pink church' }
+        ];
+        
+        let currentCardIndex = 0;
+
+        function answerValentine(answer) {
+            for(let i = 0; i < 50; i++) {
+                setTimeout(() => createHeart(), i * 30);
+            }
+            setTimeout(() => {
+                currentPage = 1;
+                updateNavigation();
+            }, 800);
+        }
+
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const indicator = document.getElementById('page-indicator');
+            
+            prevBtn.disabled = currentPage === 0;
+            nextBtn.disabled = currentPage === totalPages - 1;
+            indicator.textContent = `Page ${currentPage + 1} of ${totalPages}`;
+            
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelector(`[data-page="${currentPage}"]`).classList.add('active');
+            
+            const navButtons = document.getElementById('nav-buttons');
+            if (currentPage === 0) {
+                navButtons.style.display = 'none';
+            } else {
+                navButtons.style.display = 'flex';
+            }
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages - 1) {
+                currentPage++;
+                updateNavigation();
+            }
+        }
+
+        function previousPage() {
+            if (currentPage > 0) {
+                currentPage--;
+                updateNavigation();
+            }
+        }
+
+        function goToPage(pageNum) {
+            currentPage = pageNum;
+            updateNavigation();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextPage();
+            if (e.key === 'ArrowLeft') previousPage();
+        });
+
+        // Initialize card grid with flip functionality
+        function initializeCardGrid() {
+            const cardGrid = document.getElementById('card-grid');
+            if (!cardGrid) return;
+            
+            cardGrid.innerHTML = '';
+            
+            photos.forEach((photo, index) => {
+                const cardContainer = document.createElement('div');
+                cardContainer.className = 'card-container';
+                cardContainer.setAttribute('data-index', index);
+                
+                cardContainer.innerHTML = `
+                    <div class="card-flipper">
+                        <div class="card-face card-back"></div>
+                        <div class="card-face card-front">
+                            <img src="${photo.file}"
+                                 alt="${photo.caption}"
+                                 class="polaroid-image">
+                            <div class="polaroid-caption">
+                                <p contenteditable="true">${photo.caption}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Add click handler to flip the card
+                cardContainer.addEventListener('click', function(e) {
+                    // Don't flip if clicking on the editable caption
+                    if (e.target.tagName !== 'P' || !e.target.isContentEditable) {
+                        this.classList.toggle('flipped');
+                        createConfetti();
+                    }
+                });
+                
+                cardGrid.appendChild(cardContainer);
+            });
+        }
+
+        function flipAllCards() {
+            const cards = document.querySelectorAll('.card-container');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('flipped');
+                    createConfetti();
+                }, index * 50); // Stagger the flips
+            });
+        }
+
+        function resetAllCards() {
+            const cards = document.querySelectorAll('.card-container');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.remove('flipped');
+                }, index * 30);
+            });
+        }
+
+        function createHeart() {
+            const heartsContainer = document.getElementById('hearts-bg');
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '💕';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            heartsContainer.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 15000);
+        }
+
+        setInterval(createHeart, 800);
+        for(let i = 0; i < 15; i++) {
+            setTimeout(createHeart, i * 500);
+        }
+
+        const giftData = {
+            1: { name: 'New Laptop', emoji: '💻', description: 'A brand new laptop of your choice em !!' },
+            2: { name: 'New iPhone', emoji: '📱', description: 'The latest iPhone with phone case and screen protector' },
+            3: { name: 'Gigantic Teddy Bear', emoji: '🧸', description: 'A truly GIGANTIC Teddy bear(sorry)' }
+        };
+
+        function selectGift(giftNum, element) {
+            if (selectedGifts.has(giftNum)) {
+                selectedGifts.delete(giftNum);
+                element.classList.remove('selected');
+            } else {
+                if (selectedGifts.size < 3) {
+                    selectedGifts.add(giftNum);
+                    element.classList.add('selected');
+                    createConfetti();
+                }
+            }
+
+            if (selectedGifts.size > 0) {
+                showSelectedGifts();
+            } else {
+                document.getElementById('gift-reveal').classList.remove('show');
+            }
+        }
+
+        function showSelectedGifts() {
+            const revealContainer = document.getElementById('gift-reveal');
+            const revealedGifts = document.getElementById('revealed-gifts');
+            
+            let giftsHTML = '';
+            selectedGifts.forEach(giftNum => {
+                const gift = giftData[giftNum];
+                giftsHTML += `
+                    <div style="margin: 2rem 0;">
+                        <div class="big-emoji">${gift.emoji}</div>
+                        <h3 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--purple-deep); margin: 1rem 0;">
+                            ${gift.name}
+                        </h3>
+                        <p style="font-size: 1.3rem; color: #666;">${gift.description}</p>
+                    </div>
+                `;
+            });
+            
+            revealedGifts.innerHTML = giftsHTML;
+            revealContainer.classList.add('show');
+        }
+
+        function revealAllGifts() {
+            selectedGifts = new Set([1, 2, 3]);
+            
+            document.querySelectorAll('.gift-box').forEach(box => {
+                box.classList.add('selected');
+            });
+
+            for(let i = 0; i < 100; i++) {
+                setTimeout(() => createConfetti(), i * 30);
+            }
+
+            const revealContainer = document.getElementById('gift-reveal');
+            const revealedGifts = document.getElementById('revealed-gifts');
+            
+            revealedGifts.innerHTML = `
+                <h3 style="font-family: 'Italiana', serif; font-size: 3rem; color: var(--gold); margin-bottom: 2rem;">
+                    🎉 QUAOO!! You Get EVERYTHING! troi oiiii 🎉
+                </h3>
+                <div style="margin: 2rem 0;">
+                    <div class="big-emoji">💻</div>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--purple-deep); margin: 1rem 0;">
+                        New Laptop
+                    </h3>
+                    <p style="font-size: 1.3rem; color: #666;">A new laptop to help you study, work and watch movies:))</p>
+                </div>
+                <div style="margin: 2rem 0;">
+                    <div class="big-emoji">📱</div>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--purple-deep); margin: 1rem 0;">
+                        New iPhone 17
+                    </h3>
+                    <p style="font-size: 1.3rem; color: #666;">Newest iPhone 17 to take as much pictures as you like, without having to delete apps!</p>
+                </div>
+                <div style="margin: 2rem 0;">
+                    <div class="big-emoji">🧸</div>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--purple-deep); margin: 1rem 0;">
+                        Gigantic Teddy Bear
+                    </h3>
+                    <p style="font-size: 1.3rem; color: #666;">A huge cuddly teddy bear to hug when you are feeling down!</p>
+                </div>
+                <p style="font-size: 1.8rem; color: var(--pink-deep); margin-top: 2rem; font-style: italic;">
+                    I'm sorry that you may not like it, but to me, you deserve good thing em!
+                </p>
+            `;
+            
+            revealContainer.classList.add('show');
+        }
+
+        function createConfetti() {
+            const confettiContainer = document.getElementById('confetti');
+            const colors = ['var(--pink-deep)', 'var(--purple-deep)', 'var(--gold)', 'var(--pink-medium)', 'var(--purple-medium)'];
+            
+            for(let i = 0; i < 5; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti-piece';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 0.3 + 's';
+                confettiContainer.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }
+
+        function revealMessage() {
+            const message = document.getElementById('secret-message');
+            message.classList.add('show');
+            
+            document.getElementById('final-nav-menu').classList.add('show');
+            
+            for(let i = 0; i < 20; i++) {
+                setTimeout(() => createHeart(), i * 50);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initializeCardGrid();
+            updateNavigation();
+        });
+    </script>
+</body>
+</html>
