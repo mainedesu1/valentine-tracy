@@ -547,7 +547,7 @@
             font-weight: 600;
         }
 
-        /* Mystery Gifts Section */
+        
         .mystery-gifts {
             position: relative;
             max-width: 1200px;
@@ -1227,7 +1227,7 @@
         </div>
     </section>
 
-    <!-- Page 7: Mystery Gifts -->
+    
     <section class="page-section" data-page="7">
         <div class="mystery-gifts">
             <h2>💝Pls choose your mystery gift!💝</h2>
@@ -1251,6 +1251,13 @@
                     <h3>Mystery Gift 3</h3>
                     <p>A big protective companion for my công chúa...</p>
                 </div>
+
+				<div class="gift-box" onclick="selectGift(3, this)">
+                    <span class="gift-icon">💗</span>
+                    <h3>Mystery Gift 4</h3>
+                    <p>Someting yummy for your tummy...</p>
+                </div>
+				
             </div>
 
             <div class="lucky-section">
@@ -1479,7 +1486,9 @@
         const giftData = {
             1: { name: 'New Laptop', emoji: '💻', description: 'A brand new laptop of your choice em !!' },
             2: { name: 'New iPhone', emoji: '📱', description: 'The latest iPhone with phone case and screen protector' },
-            3: { name: 'Gigantic Teddy Bear', emoji: '🧸', description: 'A truly GIGANTIC Teddy bear(sorry)' }
+            3: { name: 'Gigantic Teddy Bear', emoji: '🧸', description: 'A truly GIGANTIC Teddy bear(sorry)' },
+			3: { name: 'Favourite Snacks', emoji: '🍫' , description: 'Favourite Snacks from Aeon Mall! ($500,00k+' },
+'
         };
 
         function selectGift(giftNum, element) {
