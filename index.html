@@ -734,18 +734,103 @@
             transform: translateY(0);
         }
 
-        /* Valentine Question */
-        .valentine-question {
-            text-align: center;
-        }
+/* Valentine Question */
+.valentine-question {
+    text-align: center;
+}
 
-        .valentine-question h2 {
-            font-family: 'Italiana', serif;
-            font-size: clamp(2.5rem, 6vw, 5rem);
-            color: var(--purple-deep);
-            margin-bottom: 3rem;
-            animation: pulse 2s ease-in-out infinite;
-        }
+.valentine-question h2 {
+    font-family: 'Italiana', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    color: var(--purple-deep);
+    margin-bottom: 3rem;
+    animation: pulse 2s ease-in-out infinite;
+    cursor: default;
+}
+
+/* Rainbow Wave Animation */
+.rainbow-text {
+    display: inline-block;
+    font-family: 'Italiana', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    margin-bottom: 3rem;
+}
+
+.rainbow-letter {
+    display: inline-block;
+    font-weight: 700;
+    animation: wave 3s ease-in-out infinite, colorShift 4s ease-in-out infinite;
+    text-shadow: 
+        0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* Automatic Mexican Wave - each letter bounces up and down in sequence */
+@keyframes wave {
+    0%, 40%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    20% {
+        transform: translateY(-25px) scale(1.3);
+    }
+}
+
+/* Color shifting animation for pastel effect */
+@keyframes colorShift {
+    0%, 100% {
+        color: #FF85C8; /* Slightly darker pastel pink */
+        filter: brightness(0.95);
+    }
+    20% {
+        color: #85C8FF; /* Slightly darker pastel blue */
+        filter: brightness(0.95);
+    }
+    40% {
+        color: #B385FF; /* Slightly darker pastel purple */
+        filter: brightness(0.95);
+    }
+    60% {
+        color: #FFD485; /* Slightly darker pastel yellow */
+        filter: brightness(0.95);
+    }
+    80% {
+        color: #85FFBB; /* Slightly darker pastel mint */
+        filter: brightness(0.95);
+    }
+}
+
+/* Stagger the wave - each letter starts at a different time */
+.rainbow-letter:nth-child(1) { animation-delay: 0s, 0s; }
+.rainbow-letter:nth-child(2) { animation-delay: 0.1s, 0.2s; }
+.rainbow-letter:nth-child(3) { animation-delay: 0.2s, 0.4s; }
+.rainbow-letter:nth-child(4) { animation-delay: 0.3s, 0.6s; }
+.rainbow-letter:nth-child(5) { animation-delay: 0.4s, 0.8s; }
+.rainbow-letter:nth-child(6) { animation-delay: 0.5s, 1s; }
+.rainbow-letter:nth-child(7) { animation-delay: 0.6s, 1.2s; }
+.rainbow-letter:nth-child(8) { animation-delay: 0.7s, 1.4s; }
+.rainbow-letter:nth-child(9) { animation-delay: 0.8s, 1.6s; }
+.rainbow-letter:nth-child(10) { animation-delay: 0.9s, 1.8s; }
+.rainbow-letter:nth-child(11) { animation-delay: 1s, 2s; }
+.rainbow-letter:nth-child(12) { animation-delay: 1.1s, 2.2s; }
+.rainbow-letter:nth-child(13) { animation-delay: 1.2s, 2.4s; }
+.rainbow-letter:nth-child(14) { animation-delay: 1.3s, 2.6s; }
+.rainbow-letter:nth-child(15) { animation-delay: 1.4s, 2.8s; }
+.rainbow-letter:nth-child(16) { animation-delay: 1.5s, 3s; }
+.rainbow-letter:nth-child(17) { animation-delay: 1.6s, 3.2s; }
+.rainbow-letter:nth-child(18) { animation-delay: 1.7s, 3.4s; }
+.rainbow-letter:nth-child(19) { animation-delay: 1.8s, 3.6s; }
+.rainbow-letter:nth-child(20) { animation-delay: 1.9s, 3.8s; }
+.rainbow-letter:nth-child(21) { animation-delay: 2s, 4s; }
+.rainbow-letter:nth-child(22) { animation-delay: 2.1s, 4.2s; }
+.rainbow-letter:nth-child(23) { animation-delay: 2.2s, 4.4s; }
+.rainbow-letter:nth-child(24) { animation-delay: 2.3s, 4.6s; }
+.rainbow-letter:nth-child(25) { animation-delay: 2.4s, 4.8s; }
+
+/* Give each letter a starting pastel color - slightly darker for readability */
+.rainbow-letter:nth-child(5n+1) { color: #FF85C8; } /* Darker pastel pink */
+.rainbow-letter:nth-child(5n+2) { color: #85C8FF; } /* Darker pastel blue */
+.rainbow-letter:nth-child(5n+3) { color: #B385FF; } /* Darker pastel purple */
+.rainbow-letter:nth-child(5n+4) { color: #FFD485; } /* Darker pastel yellow */
+.rainbow-letter:nth-child(5n) { color: #85FFBB; } /* Darker pastel mint */
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
@@ -1002,7 +1087,9 @@
     
     <section class="page-section active" data-page="0">
         <div class="hero valentine-question">
-            <h2>Will You Be My Valentine?</h2>
+            <div class="rainbow-text">
+    <span class="rainbow-letter">W</span><span class="rainbow-letter">i</span><span class="rainbow-letter">l</span><span class="rainbow-letter">l</span><span class="rainbow-letter"> </span><span class="rainbow-letter">Y</span><span class="rainbow-letter">o</span><span class="rainbow-letter">u</span><span class="rainbow-letter"> </span><span class="rainbow-letter">B</span><span class="rainbow-letter">e</span><span class="rainbow-letter"> </span><span class="rainbow-letter">M</span><span class="rainbow-letter">y</span><span class="rainbow-letter"> </span><span class="rainbow-letter">V</span><span class="rainbow-letter">a</span><span class="rainbow-letter">l</span><span class="rainbow-letter">e</span><span class="rainbow-letter">n</span><span class="rainbow-letter">t</span><span class="rainbow-letter">i</span><span class="rainbow-letter">n</span><span class="rainbow-letter">e</span><span class="rainbow-letter">?</span>
+</div>
             <div class="valentine-buttons">
                 <button class="valentine-btn" onclick="answerValentine('yes1')">Yes!</button>
                 <button class="valentine-btn" style="color: #FF69B4" onclick="answerValentine('yes2')">Yes!!(But in pink)</button>
@@ -1145,10 +1232,15 @@
         <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A711577438&color=%23ff69b4&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/santo-johnny" title="Santo &amp; Johnny" target="_blank" style="color: #cccccc; text-decoration: none;">Santo &amp; Johnny</a> · <a href="https://soundcloud.com/santo-johnny/and-i-love-her" title="And I Love Her" target="_blank" style="color: #cccccc; text-decoration: none;">And I Love Her</a></div>
 			<p>This is an older song that I would listen to imagining that we are an old couple in the 1950s going to school, work, church, or wherever em</p>
         <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A243032027&color=%23ff69b4&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/oniojoy" title="Onio Joy" target="_blank" style="color: #cccccc; text-decoration: none;">Onio Joy</a> · <a href="https://soundcloud.com/oniojoy/cant-help-falling-in-love-with-you-elvis-presley-lyrics" title="Can&#x27;t Help Falling In Love With You - Elvis Presley - Lyrics" target="_blank" style="color: #cccccc; text-decoration: none;">Can&#x27;t Help Falling In Love With You - Elvis Presley - Lyrics</a></div>
+
 			<p>my memory has failed me here, but i cannot remember if this was the song we heard on the bridge that one time while you were in melbourne, or if it were another one. Regardless this song reminds me of the precious time we had back then em</p>
+
         <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A336741764&color=%23ff69b4&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/hazy-nights" title="hazy nights" target="_blank" style="color: #cccccc; text-decoration: none;">hazy nights</a> · <a href="https://soundcloud.com/hazy-nights/dontgo" title="because" target="_blank" style="color: #cccccc; text-decoration: none;">because</a></div>
+
 			<p>this song reminds me of the pain and longsuffering i have being apart from you, and the sacredness of our time together</p>
+
         <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A259001650&color=%23ff69b4&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/stevie-wonder-official" title="STEVIE WONDER" target="_blank" style="color: #cccccc; text-decoration: none;">STEVIE WONDER</a> · <a href="https://soundcloud.com/stevie-wonder-official/i-just-called-to-say-i-love" title="I Just Called To Say I Love You (Single Version)" target="_blank" style="color: #cccccc; text-decoration: none;">I Just Called To Say I Love You</a></div>
+
 			<p>i like this song because of the chorus, but also because we often call each others name randomly because why not:)</p>
         <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A327385700&color=%23ff69b4&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/kaymhmd8" title="kaIIie" target="_blank" style="color: #cccccc; text-decoration: none;">kaIIie</a> · <a href="https://soundcloud.com/kaymhmd8/frank-sinatra-and-nancy-sinatra-something-stupid" title="Frank Sinatra and Nancy Sinatra -  Something Stupid" target="_blank" style="color: #cccccc; text-decoration: none;">Frank Sinatra and Nancy Sinatra -  Something Stupid</a></div>
 			<p>though this song is about the 'timing' of love, especially in what we say, but it reminds me of how we dared to go against the odds, the obstacles, against advice because we believe that love casts out fear, and because of that I love you !!</p>
